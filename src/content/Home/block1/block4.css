@@ -1,0 +1,21 @@
+.homeBlock4Container{
+    height: 500px;
+}
+
+@media (max-width:1120px){
+    .homeBlock4Container{
+        height: 800px;
+    }
+}
+
+@media (max-width:960px){
+    .homeBlock4Container{
+        height: 600px;
+    }
+}
+
+@media (max-width:600px){
+    .homeBlock4Container{
+        height: 500px;
+    }
+}

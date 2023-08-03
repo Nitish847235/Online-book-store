@@ -45,8 +45,9 @@ const NavBar = () => {
         window.location.reload();
     }
   return (
-    <div style={{width:'100%',height:'60px'}}>
+    <div className='navMainContainer'>
     <header>
+        <div className="navTopContainer">
      <div onClick={()=>navigate('/')} className="logo_Container">
                 <div className="logo">
                     <h2>
@@ -88,6 +89,21 @@ const NavBar = () => {
             <div onClick={()=>navigate('/cart')} className="card_link">
                 <i className="fa-solid fa-cart-shopping"></i>
                 <p>Cart</p>
+            </div>
+            </div>
+            <div className="navBottomContainer">
+                <div className="search_bottom_container">
+                    <input ref={catMenu} onClick={()=>{setHide(false)}} onChange={(e)=>{handleChange(e)}} onKeyDown={(e)=>handleEnter(e)} className="search" placeholder="Search by Title, Author, Publisher..." type="text"/>
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                    {/* <div className="recent_search" style={{display: hide===false?'block':'none'}} ref={catMenu}>
+                        {search && search.searchList && search.searchList.map((item,index)=>{ 
+                        return <div key={index} onClick={()=>{dispatch(updateQuery(item)); navigate('/products'); setHide(true)}} className="recent_list">
+                            <BiHistory/>
+                            <p>{item}</p>
+                        </div>
+                        })}
+                    </div> */}
+                </div>
             </div>
 </header>
 

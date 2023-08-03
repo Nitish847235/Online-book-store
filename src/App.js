@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  useLocation,
 } from "react-router-dom";
 import Cart from "./pages/Cart/Cart";
 import Products from "./pages/Products/Products";
@@ -15,35 +16,40 @@ import Login from "./pages/login/Login";
 import { useSelector } from "react-redux";
 import { cartValue } from "./redux/cartRedux";
 import { useEffect, useState } from "react";
+import Loader from "./component/loader/Loader";
 
 
 
 function App() {
   const cart = useSelector(cartValue);
   const [loader, setLoader] = useState(true)
+  const [location,setLocation] = useState('/');
+
   useEffect(() => {
+    setLoader(true);
     setTimeout(() => {
       setLoader(false)
     }, 1500);
-  }, [window.location.pathname])
+  }, [location])
   
   return (
-    <>
+    <div style={{position:'relative'}}>
       
     <Router>
             <NavBar/>
       <Routes>
-        <Route exact path="/" element={<Home loader={loader}/>} />
-        <Route exact path="/cart" element={<Cart/>} />
-        {cart.products.length>0 && <Route exact path="/checkout" element={<Checkout/>} />}
-        <Route exact path="/products" element={<Products/>} />
-        <Route exact path="/signup" element={<Signup/>} />
-        <Route exact path="/login" element={<Login/>} />
+        <Route exact path="/" element={<Home setLocation={setLocation}/>} />
+        <Route exact path="/cart" element={<Cart setLocation={setLocation}/>} />
+        {cart.products.length>0 && <Route exact path="/checkout" element={<Checkout setLocation={setLocation}/>} />}
+        <Route exact path="/products" element={<Products setLocation={setLocation}/>} />
+        <Route exact path="/signup" element={<Signup setLocation={setLocation}/>} />
+        <Route exact path="/login" element={<Login setLocation={setLocation}/>} />
       
       </Routes>
+      {loader && <Loader/>}
     </Router>
   
-  </>
+  </div>
   );
 }
 

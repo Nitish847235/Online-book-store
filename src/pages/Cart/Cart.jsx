@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Block2 from '../../content/cart/block2/Block2'
 import { useSelector } from 'react-redux'
 import { cartValue } from '../../redux/cartRedux'
 import {BsCartX} from 'react-icons/bs'
 import { useNavigate } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
-const Cart = () => {
+const Cart = ({setLocation}) => {
   const cart = useSelector(cartValue)
   const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    setLocation(location.pathname)
+  }, [])
+  
   return (
     <div>
       {cart.products.length>0 ? <Block2 product={cart.products}/>:

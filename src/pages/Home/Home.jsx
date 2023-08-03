@@ -7,29 +7,26 @@ import Footer from '../../component/footer/Footer'
 import { useDispatch } from 'react-redux'
 import { updateQuery } from '../../redux/SearchRedux'
 import ClipLoader from 'react-spinners/ClipLoader'
-function Home({loader}) {
+import { useLocation } from 'react-router-dom'
+function Home({setLocation}) {
     const dispatch = useDispatch();
+    const location = useLocation();
+    
     useEffect(() => {
+      setLocation(location.pathname)
       dispatch(updateQuery(null))
     }, [])
     
   return (
    <>
-   {!loader ?<div>
+   <div>
         <Block1/>
         <Block2/>
         <Block3/>
         <Block4/>
         <Footer/>
-    </div>:
-    <ClipLoader
-    color="#36d7b7"
-    loading={loader}
-    size={100}
-    cssOverride={{display:'block',margin:'40vh auto',borderColor: "red",zIndex:100,backgroundColor: 'rgba(255,255,255,0.7)'}}
-    aria-label="Loading Spinner"
-    data-testid="loader"
-  />}
+    </div>
+    
    </>
   )
 }

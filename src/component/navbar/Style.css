@@ -5,13 +5,30 @@
 
 }
 
+.navMainContainer{
+    width: 100%;
+    height: 60px;
+}
+
 header{
     background: #2874f0;
     height: 100%;
     display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px;
+}
+.navTopContainer{
+    display: flex;
+    height: 100%;
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+.navBottomContainer{
+    display: none;
 }
 .logo_Container{
     display: flex;
@@ -40,7 +57,6 @@ body{
     justify-content: space-between;
     align-items: center;
     min-width: 300px;
-    max-width: 500px;
     background: white;
     width: 440px;
     height: 38px;
@@ -214,6 +230,78 @@ body{
     padding: 0px 5px;
     text-decoration: none;
     
+}
+
+@media (max-width:960px){
+    header{
+        gap: 0;
+    }
+    .navTopContainer{
+        justify-content: space-between;
+        gap: 0;
+    }
+}
+
+@media (max-width:700px){
+    /* header{
+        position: relative;
+    }
+    .search_container{
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        bottom: 0;
+        margin-top: 20px;
+    }*/
+    .navMainContainer{
+        height: 90px;
+    } 
+    .navTopContainer{
+        justify-content:space-between;
+    }
+    .navBottomContainer{
+        display: block;
+        width: 100%;
+        /* margin: 0 20px; */
+    }
+    .search_container{
+        display: none;
+    }
+    .search_bottom_container{
+        display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* min-width: 300px; */
+    background: white;
+    width: 100%;
+    height: 33px;
+    border-radius: 2px;
+    padding: 0 15px;
+    box-shadow: -5px -5px 5px rgba(0, 0, 0, 0.1),
+    -5px -5px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    }
+
+    .search_bottom_container input{
+        width: 100%;
+        font-size: 15px;
+        border: none;
+        outline: none;
+    }
+
+    .loginbtn_container{
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .logo_Container{
+        margin-right: 0;
+    }
+
+    .logo h2{
+        font-size: 18px;
+    }
 }
 
 

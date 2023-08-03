@@ -5,8 +5,9 @@ import { cartValue, clearCart } from '../../redux/cartRedux';
 import { addOrderProduct } from '../../redux/orderRedux';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router';
+import { useLocation } from 'react-router-dom'
 
-const Checkout = () => {
+const Checkout = ({setLocation}) => {
   const dispatch = useDispatch();
   const {enqueueSnackbar} = useSnackbar();
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const Checkout = () => {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
+  const location = useLocation();
+    setLocation(location.pathname)
 
   const handleNameChange = (event) => {
     setName(event.target.value);

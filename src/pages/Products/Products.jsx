@@ -2,12 +2,18 @@ import React, { useEffect, useState } from 'react'
 import Rightbar from '../../content/products/rightbar/Rightbar'
 import { useSelector } from 'react-redux';
 import FadeLoader from 'react-spinners/FadeLoader'
+import { useLocation } from 'react-router-dom';
 
-function Products() {
+function Products({setLocation}) {
     const search = useSelector((state)=>state.search)
     const [product, setProduct] = useState([]);
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(true);
+
+    const location = useLocation();
+    useEffect(()=>{
+      setLocation(location.pathname)
+    },[])
 
     useEffect(() => {
         if(page!==0){
