@@ -1,0 +1,47 @@
+
+
+.footer-container-main{
+     Color: white;
+    padding: 20px;
+    /* text-Align: center; */
+    border-Top: 1px solid #ddd
+}
+
+.searchBox-container
+{
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+   
+}
+
+.social-media {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .social-media a {
+    margin: 0 10px;
+  }
+  
+  .social-media img {
+    width: auto;
+  height: 100px;
+  }
+
+  .logo{
+    color: #fff;
+}
+.logo img{
+    margin: 12px;
+    width: 100px;
+    height: 29.63px;
+}
+
+.content-container
+{
+    color: white;
+}
