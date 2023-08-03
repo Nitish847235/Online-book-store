@@ -43,8 +43,11 @@
 }
 
 @media (max-width:600px){
+    .Home-container img{
+        height: 300px;
+    }
     .homeBlock1InnerContainer{
-        top: 90px;
+        top: 40px;
     }
     .homeBlock1Welcome{
         font-size: 50px;
