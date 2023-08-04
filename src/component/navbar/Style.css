@@ -11,7 +11,8 @@
 }
 
 header{
-    background: #2874f0;
+    /* #2c909f */
+    background: #218c86;
     height: 100%;
     display: flex;
     /* justify-content: center;
@@ -68,9 +69,6 @@ body{
     position: relative;
 }
 
-.search_container i {
-    color: #2874f0;
-}
 
 .search_container input{
     width: 100%;
@@ -131,7 +129,7 @@ body{
 }
 
 .loginbtn_container a{
-    color: #2874f0;
+    color: #218c86;
     text-decoration: none;
     font-weight: 510;
     
@@ -151,6 +149,10 @@ body{
     display: flex;
     align-items: center;
     color: #fff;
+}
+
+.navbar_account_expandMore{
+    display: none;
 }
 
 .navbar_account_container:hover .navbar_account_line{
@@ -301,6 +303,29 @@ body{
 
     .logo h2{
         font-size: 22px;
+    }
+
+    /* .navbar_account_container:focus .navbar_account_line{
+        display: flex;
+    }
+    
+    .navbar_account_container:focus .navbar_account_list{
+        display: flex;
+    } */
+    .navbar_account_expandMore{
+        display: flex;
+        font-size: 20px;
+    }
+    .navbar_account_container:hover .navbar_account_expandMore{
+        transform: rotate(180deg);
+    }
+
+    .navbar_account_line{
+        margin-top: 49px;
+    }
+
+    .navbar_account_list{
+        margin-top: 52px;
     }
 }
 

@@ -5,7 +5,8 @@ import { addSearchProduct, updateQuery } from '../../redux/SearchRedux';
 import { useDispatch, useSelector } from 'react-redux';
 import {BiHistory,BiLogOut} from 'react-icons/bi'
 import {PiDotOutlineFill} from 'react-icons/pi'
-import {MdAccountCircle,MdOutlineViewCompactAlt} from 'react-icons/md'
+import {MdAccountCircle,MdOutlineViewCompactAlt,MdExpandMore} from 'react-icons/md'
+import {AiOutlineSearch} from 'react-icons/ai'
 
 
 
@@ -59,7 +60,7 @@ const NavBar = () => {
     
             <div className="search_container">
                 <input ref={catMenu} onClick={()=>{setHide(false)}} onChange={(e)=>{handleChange(e)}} onKeyDown={(e)=>handleEnter(e)} className="search" placeholder="Search by Title, Author, Publisher..." type="text"/>
-                <i className="fa-solid fa-magnifying-glass"></i>
+                <AiOutlineSearch style={{fontSize:'22px',color:'#218c86'}}/>
                 <div className="recent_search" style={{display: hide===false?'block':'none'}} ref={catMenu}>
                     {search && search.searchList && search.searchList.map((item,index)=>{ 
                     return <div key={index} onClick={()=>{dispatch(updateQuery(item)); navigate('/products'); setHide(true)}} className="recent_list">
@@ -76,7 +77,7 @@ const NavBar = () => {
             </div>}
 
             {user.currentUser && user.currentUser.data && <div className="navbar_account_container">
-                <div className="navbar_account_name"><PiDotOutlineFill style={{color:'#00ff00',fontSize:'21px'}}/>{user.currentUser && user.currentUser.data && user.currentUser.data.name && user.currentUser.data.name.split(' ')[0]}</div>
+                <div className="navbar_account_name"><PiDotOutlineFill style={{color:'#00ff00',fontSize:'21px'}}/>{user.currentUser && user.currentUser.data && user.currentUser.data.name && user.currentUser.data.name.split(' ')[0]}<MdExpandMore className='navbar_account_expandMore'/></div>
                 <div className='navbar_account_line'></div>
                 <div className="navbar_account_list">
                     <button className="navbar_account_listItem navbar_account_button1"><MdAccountCircle style={{fontSize:'20px'}}/>Account</button>
@@ -94,7 +95,7 @@ const NavBar = () => {
             <div className="navBottomContainer">
                 <div className="search_bottom_container">
                     <input ref={catMenu} onClick={()=>{setHide(false)}} onChange={(e)=>{handleChange(e)}} onKeyDown={(e)=>handleEnter(e)} className="search" placeholder="Search by Title, Author, Publisher..." type="text"/>
-                    <i className="fa-solid fa-magnifying-glass"></i>
+                    <AiOutlineSearch style={{fontSize:'22px',color:'#218c86'}}/>
                     {/* <div className="recent_search" style={{display: hide===false?'block':'none'}} ref={catMenu}>
                         {search && search.searchList && search.searchList.map((item,index)=>{ 
                         return <div key={index} onClick={()=>{dispatch(updateQuery(item)); navigate('/products'); setHide(true)}} className="recent_list">
