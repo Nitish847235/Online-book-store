@@ -1,5 +1,5 @@
 import React from "react";
-import "./footer.css";
+import './footer.css';
 import { useNavigate } from 'react-router'
 import { useDispatch } from "react-redux";
 import { updateQuery } from "../../redux/SearchRedux";
