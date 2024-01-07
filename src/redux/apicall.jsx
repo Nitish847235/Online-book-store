@@ -9,7 +9,7 @@ export const authLogin = async (user,dispatch)=>{
         const res = await publicRequest.post('/auth/login',user);
         if(res && res.data && res.data.status==='SUCCESS'){
             dispatch(loginSuccess(res.data))
-            localStorage.setItem('accessToken',res.data.data.token)
+            localStorage.setItem('accessTokenBookWorld',res.data.data.token)
         }
         return res
     } catch (error) {

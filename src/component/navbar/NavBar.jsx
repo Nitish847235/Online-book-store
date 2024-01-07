@@ -77,7 +77,7 @@ const NavBar = () => {
             </div>}
 
             {user.currentUser && user.currentUser.data && <div className="navbar_account_container">
-                <div className="navbar_account_name"><PiDotOutlineFill style={{color:'#00ff00',fontSize:'21px'}}/>{user.currentUser && user.currentUser.data && user.currentUser.data.name && user.currentUser.data.name.split(' ')[0]}<MdExpandMore className='navbar_account_expandMore'/></div>
+                <div className="navbar_account_name">{(user?.currentUser?.data?.picture)?<img src={user?.currentUser?.data?.picture} style={{width:'40px',height:'40px',borderRadius:'50%',marginRight:'2px'}} />:<PiDotOutlineFill style={{color:'#00ff00',fontSize:'21px'}}/>}{user.currentUser && user.currentUser.data && user.currentUser.data.name && user.currentUser.data.name.split(' ')[0]}<MdExpandMore className='navbar_account_expandMore'/></div>
                 <div className='navbar_account_line'></div>
                 <div className="navbar_account_list">
                     <button className="navbar_account_listItem navbar_account_button1"><MdAccountCircle style={{fontSize:'20px'}}/>Account</button>

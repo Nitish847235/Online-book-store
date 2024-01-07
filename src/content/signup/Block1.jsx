@@ -8,6 +8,10 @@ import { useDispatch } from "react-redux";
 import { authLogin, authRegister } from "../../redux/apicall";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import { GoogleAuthProvider, signInWithCredential, signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../../services/firebase";
+import axios from "axios";
+import { loginSuccess } from "../../redux/userRedux";
 
 const Block1 = () => {
   const dispatch = useDispatch();
@@ -97,6 +101,48 @@ const Block1 = () => {
         }
         
     }
+
+    const handleGoogleLogin = async () => {
+      try{
+          // setOpen(true);
+       const result = await signInWithPopup(auth,provider);
+       const credential = GoogleAuthProvider.credentialFromResult(result);
+       const res = await signInWithCredential(auth,credential);
+       const data = {credentials:{idToken:res._tokenResponse.idToken}}
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/userapp/auth/firebase/google`,data);
+        // setOpen(false);
+        if (response?.data?.status === 'SUCCESS') {
+          dispatch(loginSuccess(response.data))
+          localStorage.setItem('accessTokenBookWorld',response.data.data.token)
+          navigate('/');
+          enqueueSnackbar('Congrats! You have Successfully registered', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'right'
+            },
+            });
+        }
+        else{
+          enqueueSnackbar('Some error occoured, Please try after sometime!', {
+            variant: 'error',
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'right'
+            },
+            });
+        }
+        return;
+      }catch (error){
+          // setOpen(false);
+          // setErrorState('flex')
+  
+          // setTimeout(() => {
+          //     setErrorState('none')
+          // }, 3400);
+          console.log(error);
+      }
+     };
   
 
   return (
@@ -203,9 +249,9 @@ const Block1 = () => {
                     ) : null}
                   </div>
                   <div className="modal-buttons">
-                    <a href="#" className="" style={{display:'flex',alignItems:'center'}}>
+                    <div onClick={handleGoogleLogin} className="" style={{display:'flex',alignItems:'center',cursor:'pointer',borderBottom:'1px solid #ccc'}}>
                     Want to register using <AiFillGoogleCircle style={{color:'green',fontSize:'25px'}}/>Google
-                    </a>
+                    </div>
                     <button className="input-button" type="submit">
                       Registration
                     </button>

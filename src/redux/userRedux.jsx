@@ -15,15 +15,19 @@ const userSlice = createSlice({
         },
         loginSuccess: (state, action) =>{
             state.isFetching = false;
-            if(state.currentUser===null || (state.currentUser.data && state.currentUser.data===null)){
+            // if(state.currentUser===null || (state.currentUser.data && state.currentUser.data===null)){
                 state.currentUser = action.payload;
-            }
-            else{
-                console.log(state.currentUser===null || (state.currentUser.data && state.currentUser.data===null))
-                    state.currentUser.data.name = action.payload?.data?.name;
-                    state.currentUser.data.email = action.payload?.data?.email;
-                    state.currentUser.data.phone = action.payload?.data?.phone;
-            }
+            // }
+            // else{
+            //     if(state.currentUser && state.currentUser.data && state.currentUser.data.name)
+            //         state.currentUser.data.name = action.payload?.data?.name;
+            //     if(state.currentUser && state.currentUser.data && state.currentUser.data.email)
+            //         state.currentUser.data.email = action.payload?.data?.email;
+            //     if(state.currentUser && state.currentUser.data && state.currentUser.data.phone)
+            //         state.currentUser.data.phone = action.payload?.data?.phone;
+            //     if(state.currentUser && state.currentUser.data && state.currentUser.data.picture)
+            //         state.currentUser.data.picture = action.payload?.data?.picture;
+            // }
         },
         loginFailure: (state) =>{
             state.isFetching = false;
