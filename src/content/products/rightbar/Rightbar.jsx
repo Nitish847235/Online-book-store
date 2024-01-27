@@ -53,13 +53,7 @@ const Rightbar = ({product,setProduct}) => {
 
   return (
     <div className="rightbar-mainContainer1">
-        <div style={{ paddingLeft: "20px",
-  margin: "20px 0",
-  fontSize: "16px",
-  gap: "20px",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",marginBottom:'10px'}}>
+        <div className='sortingProductContainer'>
         <p style={{ color: "#000", fontWeight: "500", fontSize: "16px", paddingRight: "5px" }}>Sort By</p>
         <p style={{ "&:hover": { borderBottom: "1px solid #289BCC" }, cursor: "pointer",color: sort==="title"?'#289BCC':'#000' }} onClick={(e) => setSort("title")} >Title</p>
 

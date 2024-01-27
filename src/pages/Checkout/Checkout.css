@@ -62,4 +62,10 @@
     font-size: 25px;
     font-weight: 500;
   }
+
+  @media (max-width: 600px) {
+    .checkout-container {
+      width: 90%;
+    }
+  }
   

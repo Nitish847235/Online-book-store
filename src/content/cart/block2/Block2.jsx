@@ -53,11 +53,11 @@ const Block2 = ({product}) => {
     //     </div>
     // </div>
 
-    <div style={{display:'flex',flexDirection:'column',margin:'20px 40px'}}>
+    <div className='cartProductContainer' >
 
     <h1>Library Cart</h1>
   
-  <table>
+  <table className='pc-table'>
     <thead>
       <tr >
         <th style={{width: '400px'}} >Title</th>
@@ -69,7 +69,6 @@ const Block2 = ({product}) => {
     <tbody>
       {product && product.map((item,index)=>{
        return  <tr>
-      
         <td style={{display:'flex',alignItems:'center',gap:'20px'}}>
         <div style={{width:'100px',height:'150px'}} className="cartItemImage">
                <img style={{width:'100px'}} src={item && item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail} alt='product item'/>
@@ -81,16 +80,6 @@ const Block2 = ({product}) => {
         <td><button onClick={()=>handleRemove(index)} class="remove-btn">Remove</button></td>
       </tr>
       })}
-      {/* <tr>
-        <td style={{display:'flex',alignItems:'center',gap:'20px'}}>
-        <div style={{width:'100px',height:'150px'}} className="cartItemImage">
-               <img src='https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGlicmFyeXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80' alt='product item'/>
-        </div>
-        Book 2</td>
-        <td>Author 2</td>
-        <td>$15.00</td>
-        <td><button class="remove-btn">Remove</button></td>
-      </tr> */}
       
     </tbody>
     <tfoot>
@@ -101,6 +90,41 @@ const Block2 = ({product}) => {
       </tr>
     </tfoot>
   </table>
+  <div class="responsive-table">
+  {product &&
+    product.map((item, index) => {
+      return (
+        <div class="table-row" key={index}>
+          <div>
+          <div class="cart-item-image">
+              <img
+                src={
+                  item &&
+                  item.volumeInfo &&
+                  item.volumeInfo.imageLinks &&
+                  item.volumeInfo.imageLinks.smallThumbnail
+                }
+                alt="product item"
+              />
+            </div>
+          </div>
+          <div style={{display:'flex',justifyContent:'center',alignItems:'flex-end',flexDirection:'column'}}>
+          <div class="table-cell">{item && item.volumeInfo && item.volumeInfo.title}</div>
+          <div class="table-cell">{item && item.volumeInfo && item.volumeInfo.authors && item.volumeInfo.authors[0]}</div>
+          <div class="table-cell">₹{item && item.saleInfo && item.saleInfo.listPrice && item.saleInfo.listPrice.amount}</div>
+          <div class="table-cell">
+            <button onClick={() => handleRemove(index)} class="remove-btn">Remove</button>
+          </div>
+          </div>
+        </div>
+      );
+    })}
+
+  <div class="table-footer">
+    <div class="total">Total: ₹{cart && cart.total && cart.total.toFixed(2)}</div>
+  </div>
+</div>
+
   <div className='Btn-container-main'>
   <a href="/checkout" class="checkout-btn">Checkout</a>
 </div>

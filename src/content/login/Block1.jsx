@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 
 import { useFormik } from "formik";
@@ -11,13 +11,16 @@ import { auth, provider } from "../../services/firebase";
 import { GoogleAuthProvider, signInWithCredential, signInWithPopup } from "firebase/auth";
 import axios from "axios";
 import { loginSuccess } from "../../redux/userRedux";
+import BounceLoader from 'react-spinners/BounceLoader'
 
+import "./login.css"
 
 const Block1 = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {enqueueSnackbar} = useSnackbar();
+  const [open,setOpen] = useState(false);
 
   const initialValues = {
    
@@ -81,13 +84,13 @@ const Block1 = () => {
 
   const handleGoogleLogin = async () => {
     try{
-        // setOpen(true);
+        setOpen(true);
      const result = await signInWithPopup(auth,provider);
      const credential = GoogleAuthProvider.credentialFromResult(result);
      const res = await signInWithCredential(auth,credential);
      const data = {credentials:{idToken:res._tokenResponse.idToken}}
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/userapp/auth/firebase/google`,data);
-      // setOpen(false);
+      setOpen(false);
       if (response?.data?.status === 'SUCCESS') {
         dispatch(loginSuccess(response.data))
         localStorage.setItem('accessTokenBookWorld',response.data.data.token)
@@ -111,7 +114,7 @@ const Block1 = () => {
       }
       return;
     }catch (error){
-        // setOpen(false);
+        setOpen(false);
         // setErrorState('flex')
 
         // setTimeout(() => {
@@ -124,8 +127,8 @@ const Block1 = () => {
   return (
     <div>
     
-     
-        <div className="container">
+        {open ? <div className="loaderLogin"><BounceLoader color="#36d7b7" /></div>
+        :<div className="container">
           <div className="modal">
             <div className="modal-container">
               <div className="modal-left">
@@ -175,7 +178,7 @@ const Block1 = () => {
                
                   <div className="modal-buttons" >
                     <div onClick={handleGoogleLogin} className="" style={{display:'flex',alignItems:'center',cursor:'pointer',borderBottom:'1px solid #ccc'}}>
-                      Want to login using <AiFillGoogleCircle style={{color:'green',fontSize:'25px'}}/>Google
+                    <AiFillGoogleCircle style={{color:'green',fontSize:'25px'}}/> Login With Google
                     </div>
                     <button className="input-button" type="submit">
                       login
@@ -194,7 +197,7 @@ const Block1 = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
       
     </div>
   );
