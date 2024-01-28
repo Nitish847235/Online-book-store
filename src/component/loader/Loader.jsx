@@ -4,7 +4,7 @@ import './loader.css'
 
 const Loader = ({loader}) => {
   return (
-    <div style={{position:'absolute',top:'0',width:'100vw',height:'100vh',zIndex:100,display:'flex',alignItems:'center',justifyContent:'center',background:'#F9F9F9'}}>
+    <div style={{position:'fixed',top:'0',left:0,bottom:0,right:0,width:'100vw',height:'100vh',zIndex:100,display:'flex',alignItems:'center',justifyContent:'center',background:'#F9F9F9'}}>
         {/* <ClipLoader
             color="#36d7b7"
             loading={true}
