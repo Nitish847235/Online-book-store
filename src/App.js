@@ -17,11 +17,13 @@ import { useSelector } from "react-redux";
 import { cartValue } from "./redux/cartRedux";
 import { useEffect, useState } from "react";
 import Loader from "./component/loader/Loader";
+import {selectUser} from "./redux/userRedux";
 
 
 
 function App() {
   const cart = useSelector(cartValue);
+  const user = useSelector(selectUser);
   const [loader, setLoader] = useState(true)
   const [location,setLocation] = useState('/');
 
@@ -40,7 +42,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home setLocation={setLocation}/>} />
         <Route exact path="/cart" element={<Cart setLocation={setLocation}/>} />
-        {cart.products.length>0 && <Route exact path="/checkout" element={<Checkout setLocation={setLocation}/>} />}
+        {(user?.currentUser?.data && cart?.products?.docs?.length>0) && <Route exact path="/checkout" element={<Checkout setLocation={setLocation}/>} />}
         <Route exact path="/products" element={<Products setLocation={setLocation}/>} />
         <Route exact path="/signup" element={<Signup setLocation={setLocation}/>} />
         <Route exact path="/login" element={<Login setLocation={setLocation}/>} />

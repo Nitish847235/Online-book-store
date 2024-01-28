@@ -1,25 +1,47 @@
 import React from 'react'
 import './Block2.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { cartValue, removeItem } from '../../../redux/cartRedux'
+import { cartValue, deleteCart, findAllCart, removeItem } from '../../../redux/cartRedux'
 import { useSnackbar } from 'notistack'
 
-const Block2 = ({product}) => {
+const Block2 = ({product,userId}) => {
   const cart = useSelector(cartValue)
   const dispatch = useDispatch();
   const {enqueueSnackbar} = useSnackbar();
 
-  const handleRemove = (index)=>{
+  const handleRemove = async(index,item)=>{
     try {
-      dispatch(removeItem(index))
+      let data = {id:item?.id}
+      const res = await dispatch(deleteCart(data))
 
-      enqueueSnackbar("Product remove successfully from Cart", {
+      if(res && res?.status==="SUCCESS"){
+        let data = {
+          query: {"userId": userId ,"isDeleted":false},
+          sort: {"name":1},
+          populate: "",
+          page: 1,
+          limit: 10
+        }
+
+        const res1 = await dispatch(findAllCart(data));
+        enqueueSnackbar("Product remove successfully from Cart", {
           variant: "success",
           anchorOrigin: {
             vertical: "top",
             horizontal: "right",
           },
         });
+      }
+      else{
+        enqueueSnackbar(res.message, {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right",
+          },
+        });
+      }
+      
   } catch (e) {
       enqueueSnackbar("Some Error Occourd", {
           variant: "error",
@@ -67,17 +89,17 @@ const Block2 = ({product}) => {
       </tr>
     </thead>
     <tbody>
-      {product && product.map((item,index)=>{
+      {product && product?.docs?.map((item,index)=>{
        return  <tr>
         <td style={{display:'flex',alignItems:'center',gap:'20px'}}>
         <div style={{width:'100px',height:'150px'}} className="cartItemImage">
-               <img style={{width:'100px'}} src={item && item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail} alt='product item'/>
+               <img style={{width:'100px'}} src={item &&  item.imageLinks && item.imageLinks.smallThumbnail} alt='product item'/>
         </div>
-        <p>{item && item.volumeInfo && item.volumeInfo.title}</p></td>
+        <p>{item && item.title}</p></td>
         
-        <td>{item && item.volumeInfo && item.volumeInfo.authors && item.volumeInfo.authors[0]}</td>
-        <td>₹{item &&item.saleInfo && item.saleInfo.listPrice && item.saleInfo.listPrice.amount}</td>
-        <td><button onClick={()=>handleRemove(index)} class="remove-btn">Remove</button></td>
+        <td>{item && item.authors && item.authors[0]}</td>
+        <td>₹{item && item.listPrice && item.listPrice.amount}</td>
+        <td><button onClick={()=>handleRemove(index,item)} class="remove-btn">Remove</button></td>
       </tr>
       })}
       
@@ -91,8 +113,7 @@ const Block2 = ({product}) => {
     </tfoot>
   </table>
   <div class="responsive-table">
-  {product &&
-    product.map((item, index) => {
+  {product && product?.docs?.map((item, index) => {
       return (
         <div class="table-row" key={index}>
           <div>
@@ -100,20 +121,19 @@ const Block2 = ({product}) => {
               <img
                 src={
                   item &&
-                  item.volumeInfo &&
-                  item.volumeInfo.imageLinks &&
-                  item.volumeInfo.imageLinks.smallThumbnail
+                  item.imageLinks &&
+                  item.imageLinks.smallThumbnail
                 }
                 alt="product item"
               />
             </div>
           </div>
           <div style={{display:'flex',justifyContent:'center',alignItems:'flex-end',flexDirection:'column'}}>
-          <div class="table-cell">{item && item.volumeInfo && item.volumeInfo.title}</div>
-          <div class="table-cell">{item && item.volumeInfo && item.volumeInfo.authors && item.volumeInfo.authors[0]}</div>
-          <div class="table-cell">₹{item && item.saleInfo && item.saleInfo.listPrice && item.saleInfo.listPrice.amount}</div>
+          <div class="table-cell">{item  && item.title}</div>
+          <div class="table-cell">{item && item.authors && item.authors.length>0 && item.authors[0]}</div>
+          <div class="table-cell">₹{item && item.listPrice && item.listPrice.amount}</div>
           <div class="table-cell">
-            <button onClick={() => handleRemove(index)} class="remove-btn">Remove</button>
+            <button onClick={() => handleRemove(index,item)} class="remove-btn">Remove</button>
           </div>
           </div>
         </div>

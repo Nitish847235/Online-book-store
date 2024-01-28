@@ -4,11 +4,12 @@ import './rightbar.css'
 import {AiFillStar} from 'react-icons/ai'
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../../../redux/cartRedux';
+import { addProduct, addToCart } from '../../../redux/cartRedux';
 
 const Rightbar = ({product,setProduct}) => {
     const { enqueueSnackbar } = useSnackbar();
     const search = useSelector((state)=>state.search)
+    const user = useSelector((state)=>state.user)
     const dispatch = useDispatch();
     const [sort, setSort] = useState('')
     // useEffect(() => {
@@ -27,17 +28,48 @@ const Rightbar = ({product,setProduct}) => {
     //     setProduct(sortedBooks);
     // }, [sort])
 
-    const handleCart = (item)=>{
+    const handleCart = async(item)=>{
         try {
-            dispatch(addProduct(item))
-
-            enqueueSnackbar("Product Added successfully in Cart", {
+            // dispatch(addProduct(item))
+            let data = {
+              "userId": user?.currentUser?.data?.id,
+              "title": item && item.volumeInfo && item.volumeInfo.title,
+              "subtitle": item && item.volumeInfo && item.volumeInfo.subtitle,
+              "authors": item && item.volumeInfo && item.volumeInfo.authors,
+              "publisher": item && item.volumeInfo && item.volumeInfo.publisher,
+              "publishedDate": item && item.volumeInfo && item.volumeInfo.publishedDate,
+              "description": item && item.volumeInfo && item.volumeInfo.description,
+              "pageCount": item && item.volumeInfo && item.volumeInfo.pageCount,
+              "imageLinks": {
+                  "smallThumbnail": item && item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail,
+                  "thumbnail": item && item.volumeInfo && item.volumeInfo.authors && item.volumeInfo.imageLinks.thumbnail
+              },
+              "listPrice":{
+                  "amount": item &&item.saleInfo && item.saleInfo.listPrice && item.saleInfo.listPrice.amount,
+                  "currencyCode": item &&item.saleInfo && item.saleInfo.listPrice && item.saleInfo.listPrice.currencyCode
+              }
+          }
+          const res = await  dispatch(addToCart(data))
+          console.log(res);
+            if(res && res?.data){
+              enqueueSnackbar("Product Added successfully in Cart", {
                 variant: "success",
                 anchorOrigin: {
                   vertical: "top",
                   horizontal: "right",
                 },
               });
+            }
+            else{
+              enqueueSnackbar((res?.message)?(res?.message):"product already in your cart", {
+                variant: "error",
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "right",
+                },
+              });
+            }
+            
         } catch (e) {
             enqueueSnackbar("Some Error Occourd", {
                 variant: "error",

@@ -7,6 +7,7 @@ import {BiHistory,BiLogOut} from 'react-icons/bi'
 import {PiDotOutlineFill} from 'react-icons/pi'
 import {MdAccountCircle,MdOutlineViewCompactAlt,MdExpandMore} from 'react-icons/md'
 import {AiOutlineSearch} from 'react-icons/ai'
+import { FiShoppingCart } from "react-icons/fi";
 
 
 
@@ -16,6 +17,7 @@ const NavBar = () => {
     const catMenu = useRef(null);
     const search = useSelector((state)=>state.search)
     const user = useSelector((state)=>state.user)
+    const cart = useSelector((state)=>state.cart)
     const [value,setValue] = useState('')
     const [hide,setHide] = useState(true)
     const handleChange = (e)=>{
@@ -58,12 +60,12 @@ const NavBar = () => {
                 </div>
             </div>
     
-            <div className="search_container">
+            <div className="search_container" ref={catMenu}>
                 <input ref={catMenu} onClick={()=>{setHide(false)}} onChange={(e)=>{handleChange(e)}} onKeyDown={(e)=>handleEnter(e)} className="search" placeholder="Search by Title, Author, Publisher..." type="text"/>
                 <AiOutlineSearch style={{fontSize:'22px',color:'#218c86'}}/>
-                <div className="recent_search" style={{display: hide===false?'block':'none'}} ref={catMenu}>
+                <div className="recent_search" style={{display: hide===false?'block':'none'}} >
                     {search && search.searchList && search.searchList.map((item,index)=>{ 
-                    return <div key={index} onClick={()=>{dispatch(updateQuery(item)); navigate('/products'); setHide(true)}} className="recent_list">
+                    return <div key={index} onClick={()=> { console.log("update"); dispatch(updateQuery(item)); navigate('/products'); setHide(true)}} className="recent_list">
                         <BiHistory/>
                         <p>{item}</p>
                     </div>
@@ -88,8 +90,9 @@ const NavBar = () => {
                 
     
             <div onClick={()=>navigate('/cart')} className="card_link">
-                <i className="fa-solid fa-cart-shopping"></i>
                 <p>Cart</p>
+                <FiShoppingCart style={{fontSize:'20px'}} />
+                {user?.currentUser?.data && !isNaN(cart?.totalProductCount) && cart?.totalProductCount !== null && cart?.totalProductCount != 0 &&  <div className='cartBadge'>{cart?.totalProductCount}</div>}
             </div>
             </div>
             <div className="navBottomContainer">
